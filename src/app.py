@@ -47,10 +47,10 @@ def main(page: Page):
         ), content=ft.Container(),
         height=500, expand=True, )
 
-    def voltar(e):
-        page.views.pop()
-        top_view = page.views[-1]
-        page.go(top_view.route)
+    # def voltar(e):
+    #     page.views.pop()
+    #     top_view = page.views[-1]
+    #     page.go(top_view.route)
 
     def calcular_aposentadoria(e):
         # if media_salarial.error = "" :
@@ -265,7 +265,7 @@ def main(page: Page):
                         ),
                         pagelet
                     ],
-                    bgcolor=Colors.WHITE70 #Mudar cor do fundo de cada view
+                    # bgcolor=Colors.BLUE_ACCENT #Mudar cor do fundo de cada view
                 )
             ))
 
@@ -342,14 +342,10 @@ def main(page: Page):
 
     )
 
-
-
-
-
-    # def voltar(e):
-    #     page.views.pop()
-    #     top_view = page.views[-1]
-    #     page.go(top_view.route)
+    def voltar(e):
+        page.views.pop()
+        top_view = page.views[-1]
+        page.go(top_view.route)
 
     page.on_route_change = gerencia_rotas
     page.on_view_pop = voltar
