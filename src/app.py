@@ -24,7 +24,7 @@ def main(page: Page):
             ft.NavigationBarDestination(
                 icon=ft.Icons.ACCOUNT_BOX,
                 selected_icon=ft.Icons.BOOKMARK,
-                label="Explore",
+                label="Explorer",
 
             ),
         ]
