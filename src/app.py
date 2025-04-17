@@ -8,14 +8,12 @@ from datetime import datetime
 from dateutil.relativedelta import relativedelta
 
 
-
 def main(page: Page):
     # Configuração da página
     page.title = 'Minha aplicação Flet'
     page.theme_mode = ft.ThemeMode.LIGHT
     page.window.width = 375
     page.window.height = 667
-
 
     page.navigation_bar = ft.NavigationBar(
         destinations=[
@@ -33,17 +31,18 @@ def main(page: Page):
     pagelet = ft.Pagelet(
         navigation_bar=ft.NavigationBar(
             destinations=[
-                ft.NavigationBarDestination(icon=ft.Icons.EXPLORE, label="Inicio",  ),
+                ft.NavigationBarDestination(icon=ft.Icons.EXPLORE, label="Inicio", ),
                 ft.NavigationBarDestination(icon=ft.Icons.REPORT, label="Regras"),
                 ft.NavigationBarDestination(
                     icon=ft.Icons.ACCOUNT_BOX,
                     selected_icon=ft.Icons.ACCOUNT_BOX,
                     label="Simulação",
 
-
                 ),
             ],
-            on_change=lambda e: page.go(["/", "/segunda_tela_regras" ,"/primeira_tela_aposentadoria", "/terceira_tela_aposentadoria_resultado" ][e.control.selected_index])
+            on_change=lambda e: page.go(
+                ["/", "/segunda_tela_regras", "/primeira_tela_aposentadoria", "/terceira_tela_aposentadoria_resultado"][
+                    e.control.selected_index])
         ), content=ft.Container(),
         height=500, expand=True, )
 
@@ -53,14 +52,9 @@ def main(page: Page):
     #     page.go(top_view.route)
 
     def calcular_aposentadoria(e):
-        # if media_salarial.error = "" :
-        #     media_salarial.error_text = "Preencha o campo corretamente"
-        #
-        # else:
-        #     media_salarial.error = False
-        #     media_salarial.error_text = ""
 
-        if not all([input_idade.value, menu_genero.value, tempo_contribuicao.value, media_salarial.value, categoria_aposentadoria.value]):
+        if not all([input_idade.value, menu_genero.value, tempo_contribuicao.value, media_salarial.value,
+                    categoria_aposentadoria.value]):
             text_resultad_erro.value = "Por favor, preencha todos os campos."
             page.update()
             return
@@ -123,7 +117,6 @@ def main(page: Page):
             page.update()
             return
 
-
     def calcular_data_aposentadoria(idade_atual, tempo_contribuicao_atual, categoria, genero):
         data_atual = datetime.now()
 
@@ -146,25 +139,26 @@ def main(page: Page):
 
     def conta_salario():
         # try:
-            valor_contri = int(tempo_contribuicao.value)
-            salario = float(media_salarial.value)
+        valor_contri = int(tempo_contribuicao.value)
+        salario = float(media_salarial.value)
 
-            # Cálculo inicial de 60% da média salarial
-            aposentadoria = salario * 60 / 100
+        # Cálculo inicial de 60% da média salarial
+        aposentadoria = salario * 60 / 100
 
-            # Verifica se o tempo de contribuição excede 15 anos
-            if valor_contri > 15:
-                anos_excedentes = valor_contri - 15
-                acrescimo = anos_excedentes * 2 / 100 * salario
-                aposentadoria += acrescimo
-                return aposentadoria
-        # except ValueError:
-        #     text_resultad_erro.value = ' Valor inserido inválido'
-        #     page.update()
-        #     return
+        # Verifica se o tempo de contribuição excede 15 anos
+        if valor_contri > 15:
+            anos_excedentes = valor_contri - 15
+            acrescimo = anos_excedentes * 2 / 100 * salario
+            aposentadoria += acrescimo
+            return aposentadoria
 
-            # += é um utilizado para somar um valor a uma variável existente e atribui o resultado novamente à mesma variável
-            # no caso, aposentadoria += acrescimo e retorna na (aposentadoria)
+    # except ValueError:
+    #     text_resultad_erro.value = ' Valor inserido inválido'
+    #     page.update()
+    #     return
+
+    # += é um utilizado para somar um valor a uma variável existente e atribui o resultado novamente à mesma variável
+    # no caso, aposentadoria += acrescimo e retorna na (aposentadoria)
 
     def gerencia_rotas(e):
         page.views.clear()
@@ -224,9 +218,8 @@ def main(page: Page):
 
                     [
 
-                       AppBar(title=Text('Formulário aposentadoria', font_family='Arial' ), bgcolor=Colors.BLUE_ACCENT,
-                              center_title=CENTER ,leading=ft.Icon(ft.Icons.VERTICAL_ALIGN_CENTER)),
-
+                        AppBar(title=Text('Formulário aposentadoria', font_family='Arial'), bgcolor=Colors.BLUE_ACCENT,
+                               center_title=CENTER, leading=ft.Icon(ft.Icons.VERTICAL_ALIGN_CENTER)),
 
                         input_idade,
                         menu_genero,
@@ -234,7 +227,8 @@ def main(page: Page):
                         media_salarial,
                         categoria_aposentadoria,
                         ElevatedButton(text='Resultado aposentadoria',
-                                       on_click=calcular_aposentadoria, bgcolor=Colors.BLUE_ACCENT, color=Colors.WHITE,),
+                                       on_click=calcular_aposentadoria, bgcolor=Colors.BLUE_ACCENT,
+                                       color=Colors.WHITE, ),
                         text_resultad_erro,
 
                         pagelet
@@ -250,13 +244,14 @@ def main(page: Page):
                 View(
                     "/",
                     [
-                        AppBar(title=Text('REGRAS', font_family="Arial"), bgcolor=Colors.BLUE_ACCENT, leading=ft.Icon(ft.Icons.VERTICAL_ALIGN_CENTER) ),
+                        AppBar(title=Text('REGRAS', font_family="Arial"), bgcolor=Colors.BLUE_ACCENT,
+                               leading=ft.Icon(ft.Icons.VERTICAL_ALIGN_CENTER)),
 
                         Container(
                             Column(
                                 [
                                     input_regras,
-                                    imagem_regras,
+
                                 ],
                                 alignment=ft.MainAxisAlignment.START,
                                 horizontal_alignment=ft.CrossAxisAlignment.START,
@@ -270,6 +265,7 @@ def main(page: Page):
             ))
 
         elif page.route == '/terceira_tela_aposentadoria_resultado':
+            text_resultad_erro.value = ""
             page.views.append(
                 View(
                     "/",
@@ -278,6 +274,7 @@ def main(page: Page):
 
                         text_resultad,
                         text_resultad_salario,
+
 
                         pagelet
 
@@ -332,9 +329,11 @@ def main(page: Page):
                         "Homens: Idade mínima de 65 anos e mínimo de 20 anos de contribuição\n\n"
                         "Aposentadoria por Tempo de Contribuição:\n"
                         "Homens: 35 anos de contribuição\n"
-                        "Mulheres: 30 anos de contribuição", size=17, color=Colors.WHITE, font_family="Arial", )
+                        "Mulheres: 30 anos de contribuição", size=17, color=Colors.WHITE, font_family="Arial", ),
+                imagem_regras,
             ],
             alignment=ft.MainAxisAlignment.START,
+
         ),
         padding=ft.padding.all(20),  # Padding ao redor do Container
         bgcolor=Colors.BLUE_GREY,  # Cor de fundo do Container
@@ -356,3 +355,45 @@ def main(page: Page):
 
 
 ft.app(main)
+
+# if not input_idade.value:
+#     input_idade.error = True
+#     input_idade.error_text ="preencha este campo"
+#     page.update()
+#
+# if not media_salarial.value:
+#     media_salarial.error = True
+#     media_salarial.error_text ="preencha este campo"
+#     page.update()
+#
+# if not categoria_aposentadoria.value:
+#     categoria_aposentadoria.error = True
+#     categoria_aposentadoria.error_text ="preencha este campo"
+#     page.update()
+#
+# if not menu_genero.value:
+#     menu_genero.error = True
+#     menu_genero.error_text ="preencha este campo"
+#     page.update()
+#
+# if not tempo_contribuicao.value:
+#     tempo_contribuicao.error = True
+#     tempo_contribuicao.error_text ="preencha este campo"
+#     page.update()
+#
+#
+# if not input_idade.value.isnumeric():
+#     input_idade.error = True
+#     input_idade.error_text = "preencha o valor corretamente"
+#     page.update()
+#
+# if not media_salarial.value.isnumeric():
+#     media_salarial.error = True
+#     media_salarial.error_text = "preencha o valor corretamente"
+#     page.update()
+#
+# if not tempo_contribuicao.value.isnumeric():
+#     tempo_contribuicao.error = True
+#     tempo_contribuicao.error_text = "preencha o valor corretamente"
+#     page.update()
+
